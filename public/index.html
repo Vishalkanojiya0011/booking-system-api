@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f8f7">
+    <meta name="description" content="Find trusted doctors and book a convenient appointment with Carely.">
+    <title>Carely — Find care that feels right</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div id="confirmation-toast" class="confirmation-toast" role="status" aria-live="polite" aria-atomic="true">
+      <span class="confirmation-toast-icon" aria-hidden="true">✓</span>
+      <span class="confirmation-toast-copy"><strong id="confirmation-toast-title"></strong><small id="confirmation-toast-message"></small></span>
+      <button id="close-confirmation-toast" type="button" aria-label="Dismiss confirmation">×</button>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Carely home"><span class="brand-mark">+</span> carely<span class="brand-period">.</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a id="find-doctor-nav" href="#discover">Find a doctor</a>
+        <a id="how-it-works-nav" href="#how-it-works">How it works</a>
+        <a href="#my-bookings" id="bookings-nav" class="hidden">My appointments</a>
+        <a href="#doctor-dashboard" id="doctor-dashboard-nav" class="hidden">Doctor dashboard</a>
+      </nav>
+      <div class="header-actions">
+        <span id="user-greeting" class="user-greeting hidden"></span>
+        <a id="profile-button" class="button button-outline profile-header-button hidden" href="#my-profile">My profile</a>
+        <button id="auth-button" class="button button-outline" type="button">Log in</button>
+        <button id="sign-out-button" class="button button-outline hidden" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> CARE THAT'S CLOSER</div>
+          <h1>Feel better.<br>Start with <span>the right care.</span></h1>
+          <p>Meet trusted doctors who listen. Find the right specialist and book an appointment that fits your life.</p>
+          <form id="doctor-search" class="doctor-search">
+            <label><span aria-hidden="true">⌕</span><input id="doctor-query" type="search" placeholder="Doctor or specialty" aria-label="Search doctor or specialty"></label>
+            <label class="specialty-search"><span aria-hidden="true">✚</span><select id="specialty-filter" aria-label="Choose a specialty"><option value="">All specialties</option></select></label>
+            <button class="button button-dark" type="submit">Find a doctor <span aria-hidden="true">↗</span></button>
+          </form>
+          <div class="hero-note"><span class="trust-check">✓</span><span>Care you can trust, appointments made simple.</span></div>
+        </div>
+        <div class="hero-art">
+          <img class="hero-doctor-image" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Friendly doctor ready to help">
+          <div class="hero-image-wash"></div>
+          <div class="doctor-hero-badge"><span class="badge-check">✓</span><span><strong>Here for your health</strong><small>Care that starts with listening</small></span></div>
+          <div class="hero-rating"><span class="rating-symbol">+</span><strong>Care, made personal</strong><small>Find an appointment that fits</small></div>
+        </div>
+        <div class="hero-bottom"><span>YOUR HEALTH, YOUR WAY</span><span>COMPASSIONATE CARE STARTS HERE ↓</span></div>
+      </section>
+
+      <section class="discover section-wrap" id="discover">
+        <div class="section-heading">
+          <div><div class="eyebrow">MEET YOUR CARE TEAM</div><h2>Find a doctor who gets you.</h2></div>
+          <p>Experienced specialists. Personal care.<br>Appointments on your schedule.</p>
+        </div>
+        <div id="notice" class="notice hidden" role="status"></div>
+        <div class="specialty-chips" id="specialty-chips" aria-label="Filter doctors by specialty">
+          <button class="specialty-chip active" type="button" data-specialty="">All doctors</button>
+        </div>
+        <div id="resource-list" class="resource-grid" aria-live="polite">
+          <div class="loading-card">Finding doctors for you<span class="loading-dots">...</span></div>
+        </div>
+      </section>
+
+      <section id="my-bookings" class="bookings-section section-wrap hidden">
+        <div class="section-heading">
+          <div><div class="eyebrow">YOUR HEALTH, ON YOUR CALENDAR</div><h2>Your appointments.</h2></div>
+          <p>All your upcoming visits,<br>in one easy place.</p>
+        </div>
+        <div id="booking-list" class="booking-list"></div>
+      </section>
+
+      <section id="my-profile" class="profile-section section-wrap hidden">
+        <div class="section-heading">
+          <div><div class="eyebrow">YOUR CARELY ACCOUNT</div><h2>Your profile.</h2></div>
+          <p>Your account information<br>and care activity.</p>
+        </div>
+        <div id="profile-card" class="profile-card" aria-live="polite">
+          <div class="profile-loading">Loading your profile…</div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="care-steps section-wrap">
+        <div class="section-heading"><div><div class="eyebrow">A LITTLE LESS STRESS</div><h2>Care in three simple steps.</h2></div></div>
+        <div class="steps-grid">
+          <article class="care-step"><span>01</span><div class="step-icon">⌕</div><h3>Find your specialist</h3><p>Browse doctors by specialty and find the right fit for your care.</p></article>
+          <article class="care-step"><span>02</span><div class="step-icon">▦</div><h3>Choose your time</h3><p>See available appointments and pick a time that works for you.</p></article>
+          <article class="care-step"><span>03</span><div class="step-icon">♡</div><h3>Feel cared for</h3><p>Book securely and keep your upcoming appointments close at hand.</p></article>
+        </div>
+      </section>
+
+      <section id="admin-section" class="admin-section section-wrap hidden">
+        <div class="section-heading">
+          <div><div class="eyebrow">CARE TEAM SETTINGS</div><h2>Add a doctor to your team.</h2></div>
+          <p>Manage your doctors and<br>open appointment times.</p>
+        </div>
+        <form id="resource-form" class="admin-form">
+          <label>Doctor's name<input name="name" placeholder="e.g. Dr. Maya Patel" required></label>
+          <label>Specialty<input name="type" placeholder="e.g. Cardiology" required></label>
+          <label>Qualification<input name="qualification" placeholder="MBBS, MD"></label>
+          <label>Experience (years)<input name="experienceYears" type="number" min="0" value="0"></label>
+          <label>Medical registration number<input name="registrationNumber"></label>
+          <label>Gender<select name="gender"><option value="">Not specified</option><option>Female</option><option>Male</option><option>Other</option></select></label>
+          <label>Languages<input name="languages" placeholder="Hindi, English"></label>
+          <label>Consultation fee (₹)<input name="consultationFee" type="number" min="0" step="0.01" value="0"></label>
+          <label>Minutes per visit<input name="slotDurationMinutes" type="number" min="5" max="480" value="30" required></label>
+          <label>Available days<input name="availableDays" value="Monday, Tuesday, Wednesday, Thursday, Friday, Saturday" required></label>
+          <label>Available from<input name="availableStartTime" type="time" value="09:00" required></label>
+          <label>Available until<input name="availableEndTime" type="time" value="20:00" required></label>
+          <label>Consultation types<input name="consultationTypes" value="Offline" placeholder="Online, Offline"></label>
+          <label>Hospital / clinic name<input name="clinicName"></label>
+          <label class="form-wide">Clinic address<input name="clinicAddress"></label>
+          <label>Patients treated (estimate)<input name="totalPatientsTreatedEstimate" type="number" min="0" value="0"></label>
+          <label class="form-wide">Awards & achievements<input name="awardsAndAchievements" placeholder="Separate items with commas"></label>
+          <label class="form-wide">About the doctor<textarea name="description" rows="3" placeholder="Experience, approach, and areas of care"></textarea></label>
+          <label>Profile photo<input name="profilePhoto" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label>
+          <label class="form-wide">Clinic photos<input name="clinicPhotos" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple></label>
+          <button class="button button-dark" type="submit">Add doctor <span aria-hidden="true">↗</span></button>
+        </form>
+        <form id="slots-form" class="admin-form schedule-form">
+          <label>Choose doctors<select name="resourceId" required><option value="">Select doctor(s)</option><option value="all">All doctors</option></select></label>
+          <label>Appointment day<input name="date" type="date" required></label>
+          <label>Starts at<input name="startHour" type="number" min="0" max="23" value="9" required></label>
+          <label>Closes at<input name="endHour" type="number" min="1" max="24" value="20" required></label>
+          <button class="button button-dark" type="submit">Add appointment times <span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="admin-management">
+          <div class="section-heading admin-management-heading">
+            <div><div class="eyebrow">ACCOUNT MANAGEMENT</div><h2>Manage accounts.</h2></div>
+            <button id="refresh-admin-data" class="button button-outline" type="button">Refresh details</button>
+          </div>
+          <div id="admin-account-tabs" class="admin-account-tabs" role="tablist" aria-label="Choose account type">
+            <button id="admin-patients-tab" class="admin-account-tab active" type="button" role="tab" aria-selected="true" aria-controls="admin-account-list" data-account-type="patient">Patients</button>
+            <button id="admin-doctors-tab" class="admin-account-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-account-list" data-account-type="doctor">Doctors</button>
+          </div>
+          <div id="admin-account-list" class="admin-record-list" role="tabpanel" aria-labelledby="admin-patients-tab" aria-live="polite">
+            <div class="profile-loading">Loading patient accounts…</div>
+          </div>
+        </div>
+        <div class="admin-management">
+          <div class="section-heading admin-management-heading">
+            <div><div class="eyebrow">APPOINTMENT MANAGEMENT</div><h2>All bookings.</h2></div>
+          </div>
+          <div id="admin-booking-list" class="booking-list" aria-live="polite">
+            <div class="profile-loading">Loading appointments…</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="doctor-dashboard" class="admin-section section-wrap hidden">
+        <div class="section-heading">
+          <div><div class="eyebrow">YOUR PRACTICE</div><h2>Doctor dashboard.</h2></div>
+          <p>Update your public profile,<br>availability, and appointments.</p>
+        </div>
+        <form id="doctor-profile-form" class="admin-form">
+          <label>Doctor's name<input name="name" required></label>
+          <label>Specialty<input name="type" required></label>
+          <label>Qualification<input name="qualification"></label>
+          <label>Experience (years)<input name="experienceYears" type="number" min="0"></label>
+          <label>Medical registration number<input name="registrationNumber"></label>
+          <label>Gender<select name="gender"><option value="">Not specified</option><option>Female</option><option>Male</option><option>Other</option></select></label>
+          <label>Languages<input name="languages" placeholder="Hindi, English"></label>
+          <label>Consultation fee (₹)<input name="consultationFee" type="number" min="0" step="0.01"></label>
+          <label>Minutes per visit<input name="slotDurationMinutes" type="number" min="5" max="480" required></label>
+          <label>Available days<input name="availableDays" required></label>
+          <label>Available from<input name="availableStartTime" type="time" required></label>
+          <label>Available until<input name="availableEndTime" type="time" required></label>
+          <label>Consultation types<input name="consultationTypes" placeholder="Online, Offline"></label>
+          <label>Hospital / clinic name<input name="clinicName"></label>
+          <label class="form-wide">Clinic address<input name="clinicAddress"></label>
+          <label>Patients treated (estimate)<input name="totalPatientsTreatedEstimate" type="number" min="0"></label>
+          <label class="form-wide">Awards & achievements<input name="awardsAndAchievements"></label>
+          <label class="form-wide">About your practice<textarea name="description" rows="3"></textarea></label>
+          <label>Profile photo<input name="profilePhoto" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label>
+          <label class="form-wide">Clinic photos<input name="clinicPhotos" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple></label>
+          <button class="button button-dark" type="submit">Update profile <span aria-hidden="true">↗</span></button>
+        </form>
+        <h3 class="dashboard-subheading">Set appointment availability</h3>
+        <form id="doctor-slots-form" class="admin-form schedule-form">
+          <label>Appointment day<input name="date" type="date" required></label>
+          <label>Starts at<input name="startHour" type="number" min="9" max="19" value="9" required></label>
+          <label>Closes at<input name="endHour" type="number" min="10" max="20" value="20" required></label>
+          <button class="button button-dark" type="submit">Add appointment times <span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="doctor-appointments-heading"><h3 class="dashboard-subheading">Patient appointments</h3></div>
+        <div id="doctor-appointment-list" class="booking-list" aria-live="polite">
+          <div class="profile-loading">Loading your appointments…</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="/"><span class="brand-mark">+</span> carely<span class="brand-period">.</span></a>
+      <span>Good health starts with feeling heard.</span>
+      <a id="footer-find-doctor" href="#discover">Find a doctor ↑</a>
+    </footer>
+
+    <dialog id="auth-dialog" class="auth-dialog">
+      <button id="close-auth" class="dialog-close" type="button" aria-label="Close sign-in dialog">×</button>
+      <div class="eyebrow">YOUR CARE, ALL IN ONE PLACE</div>
+      <h2 id="auth-title">Welcome back.</h2>
+      <p id="auth-description">Log in to manage your appointments.</p>
+      <div id="auth-error" class="inline-notice hidden" role="alert"></div>
+      <form id="auth-form">
+        <label id="name-field" class="hidden">Your name<input name="name" autocomplete="name" placeholder="Alex Morgan"></label>
+        <fieldset id="account-type-field" class="account-type-field hidden">
+          <legend>How will you use Carely?</legend>
+          <label><input type="radio" name="accountType" value="patient" checked> As patient</label>
+          <label><input type="radio" name="accountType" value="doctor"> As doctor</label>
+        </fieldset>
+        <div id="doctor-registration-fields" class="doctor-registration-fields hidden">
+          <label>Specialty<input name="specialty" placeholder="e.g. Cardiology"></label>
+          <label>Qualification<input name="qualification" placeholder="MBBS, MD"></label>
+          <label>Experience (years)<input name="experienceYears" type="number" min="0" value="0"></label>
+          <label>Medical registration number<input name="registrationNumber"></label>
+          <label>Gender<select name="doctorGender"><option value="">Not specified</option><option>Female</option><option>Male</option><option>Other</option></select></label>
+          <label>Languages<input name="languages" placeholder="Hindi, English"></label>
+          <label>Consultation fee (₹)<input name="consultationFee" type="number" min="0" step="0.01" value="0"></label>
+          <label>Minutes per visit<input name="slotDurationMinutes" type="number" min="5" max="480" value="30"></label>
+          <label>Available days<input name="availableDays" value="Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"></label>
+          <label>Available from<input name="availableStartTime" type="time" value="09:00"></label>
+          <label>Available until<input name="availableEndTime" type="time" value="20:00"></label>
+          <label>Consultation types<input name="consultationTypes" value="Offline" placeholder="Online, Offline"></label>
+          <label>Hospital / clinic name<input name="clinicName"></label>
+          <label class="form-wide">Clinic address<input name="clinicAddress"></label>
+          <label>Patients treated (estimate)<input name="totalPatientsTreatedEstimate" type="number" min="0" value="0"></label>
+          <label class="form-wide">Awards & achievements<input name="awardsAndAchievements"></label>
+          <label class="form-wide">About your practice<textarea name="description" rows="3" placeholder="Your experience and areas of care"></textarea></label>
+          <label>Profile photo<input name="profilePhoto" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label>
+          <label class="form-wide">Clinic photos<input name="clinicPhotos" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple></label>
+          <p>Your profile is published immediately. You can set availability from your doctor dashboard.</p>
+        </div>
+        <div id="patient-registration-fields" class="patient-registration-fields hidden">
+          <label>Date of birth<input name="dateOfBirth" type="date" min="1900-01-01"></label>
+          <label>Gender<select name="gender"><option value="">Select gender</option><option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option></select></label>
+          <label>Mobile number<input name="mobileNumber" type="tel" autocomplete="tel" placeholder="+91 98765 43210"></label>
+          <label>Address<input name="address" autocomplete="street-address" placeholder="House number, street, area"></label>
+          <label>City<input name="city" autocomplete="address-level2"></label>
+          <label>State<input name="state" autocomplete="address-level1"></label>
+          <label class="form-wide">Current health problem<textarea name="currentHealthProblem" rows="3" maxlength="4000" placeholder="Describe your current health problem (Hindi or English)."></textarea></label>
+          <p>Health details are not public. They are shared with the doctor responsible for your appointment.</p>
+        </div>
+        <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required></label>
+        <button id="auth-submit" class="button button-dark auth-submit" type="submit">Log in <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="auth-switch"><span id="auth-switch-prompt">New to Carely?</span> <button id="auth-switch" type="button">Create an account</button></p>
+    </dialog>
+
+    <dialog id="slots-dialog" class="slots-dialog">
+      <button id="close-slots" class="dialog-close" type="button" aria-label="Close available times">×</button>
+      <div class="eyebrow">BOOK YOUR VISIT</div>
+      <h2 id="slots-title">Choose a time.</h2>
+      <p id="slots-description">Pick a date to see available appointments.</p>
+      <label class="date-label">Appointment date<input id="slot-date" type="date"></label>
+      <div id="slot-list" class="slot-list"></div>
+      <section class="booking-patient-section" aria-labelledby="booking-patient-heading">
+        <h3 id="booking-patient-heading">Patient information for this doctor</h3>
+        <p id="booking-patient-status" class="booking-patient-status">Sign in with a complete patient profile to share your details with the doctor for this appointment.</p>
+        <a id="booking-complete-profile" class="text-button hidden" href="#my-profile">Complete patient profile</a>
+        <div id="booking-patient-summary" class="booking-patient-summary hidden"></div>
+        <label class="booking-health-label">Current health problem
+          <textarea id="booking-health-problem" rows="3" maxlength="4000" placeholder="Describe your problem in Hindi or English. If none, write “No current health problem.”" required></textarea>
+          <small>Only the doctor for this appointment can see the details you submit.</small>
+        </label>
+      </section>
+      <div class="slot-booking-action">
+        <p id="slot-selection-message" aria-live="polite">Choose an available time to continue.</p>
+        <button id="book-appointment-button" class="button button-dark" type="button" disabled>Book appointment <span aria-hidden="true">↗</span></button>
+      </div>
+    </dialog>
+    <dialog id="doctor-details-dialog" class="doctor-details-dialog">
+      <button id="close-doctor-details" class="dialog-close" type="button" aria-label="Close doctor profile">×</button>
+      <div id="doctor-details-content"></div>
+    </dialog>
+  </body>
+</html>
